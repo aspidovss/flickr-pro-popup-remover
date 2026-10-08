@@ -20,7 +20,7 @@ A small userscript that removes the full-screen **"Upgrade to Pro"** popup that 
    - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Install the script:
-   - **[Click here to install from GitHub](https://github.com/YOUR_GITHUB_USERNAME/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
+   - **[Click here to install from GitHub](https://github.com/aspdiovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
    - or from Greasy Fork: _link coming soon_
 3. Open any Flickr photo page. The popup no longer appears.
 

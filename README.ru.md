@@ -20,7 +20,7 @@
    - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Установите скрипт:
-   - **[Установить с GitHub](https://github.com/YOUR_GITHUB_USERNAME/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
+   - **[Установить с GitHub](https://github.com/aspdiovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
    - или с Greasy Fork: _ссылка появится позже_
 3. Откройте любую страницу фото на Flickr. Окно больше не появляется.
 
