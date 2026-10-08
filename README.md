@@ -2,21 +2,32 @@
 
 [Русская версия](README.ru.md)
 
-A small userscript that removes the full-screen **"Upgrade to Pro"** popup that Flickr keeps showing while you browse photos — together with its dark backdrop — and does it **without flicker**.
+A small userscript that removes the full-screen **"Upgrade to Pro"** popup that Flickr keeps showing while you browse photos — together with its dark backdrop — and the **"Upgrade to Flickr Pro to hide these ads"** banner. It does it **without flicker**.
 
 > Not affiliated with or endorsed by Flickr. This script only hides an advertisement in your own browser; it does not bypass any paywall or unlock any Pro feature.
 
 ## What it removes
 
-This is the popup (and the dark backdrop behind it) that the script hides:
+### 1. The "Upgrade to Pro" popup
+
+This popup (and the dark backdrop behind it) is hidden:
 
 ![Example of the Flickr "Upgrade to Pro" popup that is removed](images/popup-example.png)
 
 _Screenshot of the Flickr advertisement shown for documentation purposes only. Flickr and the photo in the popup belong to their respective owners._
 
+### 2. The "Upgrade to Flickr Pro to hide these ads" banner
+
+This advertising text under the top menu is removed:
+
+![Example of the "Upgrade to Flickr Pro to hide these ads" banner that is removed](images/banner-example.png)
+
+Removed text: **Upgrade to Flickr Pro to hide these ads** (the `.upgrade-to-pro-cta` block).
+
 ## Features
 
 - Hides the Pro upsell modal and its backdrop before the browser paints it (no flash of the popup).
+- Hides the "Upgrade to Flickr Pro to hide these ads" banner (`.upgrade-to-pro-cta`).
 - Restores page scrolling, which the popup locks.
 - Leaves every other Flickr dialog (share, edit, etc.) untouched.
 - No dependencies, no network requests, no data collection. About 100 lines of readable code.
@@ -29,7 +40,7 @@ _Screenshot of the Flickr advertisement shown for documentation purposes only. F
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Install the script:
    - **[Click here to install from GitHub](https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
-   - **[Click here to install from Greasy Fork](https://greasyfork.org/en/scripts/599316-flickr-pro-popup-remover)**
+   - or from **[Greasy Fork](https://greasyfork.org/en/scripts/599316-flickr-pro-popup-remover)** (recommended: automatic updates)
 3. Open any Flickr photo page. The popup no longer appears.
 
 ## Requirements
@@ -42,7 +53,8 @@ Flickr renders the popup as a `fluid-modal-view` element (containing an `upsell-
 
 1. injects CSS at `document-start` that hides any modal containing the upsell markup and keeps every backdrop invisible until it is confirmed to belong to a regular dialog;
 2. watches the DOM with a `MutationObserver` (synchronously, before the frame is drawn) and reveals backdrops of regular dialogs;
-3. presses the popup's close button once so Flickr tidies up its own state.
+3. presses the popup's close button once so Flickr tidies up its own state;
+4. hides the `.upgrade-to-pro-cta` banner with a plain CSS rule.
 
 Flickr uses dynamically generated element ids (`yui_3_18_1_…`), so the script matches stable class names and link patterns instead.
 

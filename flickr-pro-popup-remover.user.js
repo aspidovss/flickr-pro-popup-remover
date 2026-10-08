@@ -2,9 +2,9 @@
 // @name         Flickr Pro Popup Remover
 // @name:ru      Удаление окна Flickr Pro
 // @namespace    https://github.com/aspidovss/flickr-pro-popup-remover
-// @version      1.5.0
-// @description  Removes the "Upgrade to Pro" popup and its dark backdrop on flickr.com, without flicker.
-// @description:ru  Убирает всплывающее окно «Upgrade to Pro» и затемнение на flickr.com без морганий.
+// @version      1.6.0
+// @description  Removes the "Upgrade to Pro" popup, its dark backdrop and the "Upgrade to Flickr Pro to hide these ads" banner on flickr.com, without flicker.
+// @description:ru  Убирает окно «Upgrade to Pro», затемнение и баннер «Upgrade to Flickr Pro to hide these ads» на flickr.com без морганий.
 // @author       aspidovss
 // @license      MIT
 // @homepageURL  https://github.com/aspidovss/flickr-pro-popup-remover
@@ -19,12 +19,14 @@
 /*
  * Flickr Pro Popup Remover
  * ------------------------
- * EN: Flickr periodically shows a full-screen "Upgrade to Pro" modal. This script hides it
- *     (and its backdrop) before the browser paints it, restores page scrolling, and does
+ * EN: Flickr periodically shows a full-screen "Upgrade to Pro" modal and an inline
+ *     "Upgrade to Flickr Pro to hide these ads" banner. This script hides both (and the
+ *     modal's backdrop) before the browser paints them, restores page scrolling, and does
  *     not touch any other Flickr dialog (share, edit, etc.).
- * RU: Flickr периодически показывает полноэкранное окно «Upgrade to Pro». Скрипт прячет его
- *     (и затемнение) до отрисовки браузером, возвращает прокрутку страницы и не трогает
- *     остальные окна Flickr (поделиться, редактирование и т.д.).
+ * RU: Flickr периодически показывает полноэкранное окно «Upgrade to Pro» и баннер
+ *     «Upgrade to Flickr Pro to hide these ads». Скрипт прячет оба (и затемнение окна)
+ *     до отрисовки браузером, возвращает прокрутку страницы и не трогает остальные окна
+ *     Flickr (поделиться, редактирование и т.д.).
  *
  * Requires CSS :has() — Firefox 121+, Chrome/Edge 105+, Safari 15.4+.
  * Требуется CSS :has() — Firefox 121+, Chrome/Edge 105+, Safari 15.4+.
@@ -49,17 +51,20 @@
   // EN: Injected at document-start, so the rules apply before the first paint:
   //     1) the ad modal is always hidden;
   //     2) every backdrop is invisible until we confirm it is not paired with an ad;
-  //     3) the ad cannot lock page scrolling (it sets overflow:hidden on <body>).
+  //     3) the ad cannot lock page scrolling (it sets overflow:hidden on <body>);
+  //     4) the "Upgrade to Flickr Pro to hide these ads" banner is hidden.
   // RU: Подключается на document-start, поэтому правила действуют до первой отрисовки:
   //     1) рекламное окно всегда скрыто;
   //     2) любое затемнение невидимо, пока не подтверждено, что рядом нет рекламы;
-  //     3) реклама не блокирует прокрутку (она ставит overflow:hidden на <body>).
+  //     3) реклама не блокирует прокрутку (она ставит overflow:hidden на <body>);
+  //     4) баннер «Upgrade to Flickr Pro to hide these ads» скрыт.
   const css = document.createElement('style');
   css.textContent = `
     .fluid-modal-view:has(${AD}) { display: none !important; }
     .fluid-modal-overlay:not([${OK}]) { visibility: hidden !important; }
     html:has(.fluid-modal-view:has(${AD})),
     html:has(.fluid-modal-view:has(${AD})) body { overflow: auto !important; }
+    .upgrade-to-pro-cta { display: none !important; }
   `;
   (document.head || document.documentElement).appendChild(css);
 
@@ -111,5 +116,5 @@
 
   new MutationObserver(check).observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener('DOMContentLoaded', check);
-  log('v1.5.0 started');
+  log('v1.6.0 started');
 })();
