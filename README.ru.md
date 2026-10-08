@@ -29,7 +29,7 @@ _Скриншот рекламного окна Flickr приведён толь
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Установите скрипт:
    - **[Установить с GitHub](https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
-   - или с Greasy Fork: _ссылка появится позже_
+   - **[Установить с Greasy Fork]([https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js](https://greasyfork.org/en/scripts/599316-flickr-pro-popup-remover))**
 3. Откройте любую страницу фото на Flickr. Окно больше не появляется.
 
 ## Требования
