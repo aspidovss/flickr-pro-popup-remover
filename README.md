@@ -29,7 +29,7 @@ _Screenshot of the Flickr advertisement shown for documentation purposes only. F
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Install the script:
    - **[Click here to install from GitHub](https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
-   - or from Greasy Fork: _link coming soon_
+   - **[Click here to install from Greasy Fork]([https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js](https://greasyfork.org/en/scripts/599316-flickr-pro-popup-remover))**
 3. Open any Flickr photo page. The popup no longer appears.
 
 ## Requirements
