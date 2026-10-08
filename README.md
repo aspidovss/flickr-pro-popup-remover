@@ -6,6 +6,14 @@ A small userscript that removes the full-screen **"Upgrade to Pro"** popup that 
 
 > Not affiliated with or endorsed by Flickr. This script only hides an advertisement in your own browser; it does not bypass any paywall or unlock any Pro feature.
 
+## What it removes
+
+This is the popup (and the dark backdrop behind it) that the script hides:
+
+![Example of the Flickr "Upgrade to Pro" popup that is removed](images/popup-example.png)
+
+_Screenshot of the Flickr advertisement shown for documentation purposes only. Flickr and the photo in the popup belong to their respective owners._
+
 ## Features
 
 - Hides the Pro upsell modal and its backdrop before the browser paints it (no flash of the popup).
@@ -20,7 +28,7 @@ A small userscript that removes the full-screen **"Upgrade to Pro"** popup that 
    - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Install the script:
-   - **[Click here to install from GitHub](https://github.com/aspdiovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
+   - **[Click here to install from GitHub](https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
    - or from Greasy Fork: _link coming soon_
 3. Open any Flickr photo page. The popup no longer appears.
 

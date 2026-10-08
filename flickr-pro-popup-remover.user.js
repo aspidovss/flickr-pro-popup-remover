@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Flickr Pro Popup Remover
 // @name:ru      Удаление окна Flickr Pro
-// @namespace    https://github.com/aspdiovss/flickr-pro-popup-remover
+// @namespace    https://github.com/aspidovss/flickr-pro-popup-remover
 // @version      1.5.0
 // @description  Removes the "Upgrade to Pro" popup and its dark backdrop on flickr.com, without flicker.
 // @description:ru  Убирает всплывающее окно «Upgrade to Pro» и затемнение на flickr.com без морганий.
 // @author       aspidovss
 // @license      MIT
-// @homepageURL  https://github.com/aspdiovss/flickr-pro-popup-remover
-// @supportURL   https://github.com/aspdiovss/flickr-pro-popup-remover/issues
+// @homepageURL  https://github.com/aspidovss/flickr-pro-popup-remover
+// @supportURL   https://github.com/aspidovss/flickr-pro-popup-remover/issues
 // @match        https://www.flickr.com/*
 // @match        https://flickr.com/*
 // @run-at       document-start

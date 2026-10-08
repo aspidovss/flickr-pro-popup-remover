@@ -6,6 +6,14 @@
 
 > Проект не связан с Flickr и не одобрен им. Скрипт лишь прячет рекламу в вашем браузере: он не обходит платный доступ и не открывает функции Pro.
 
+## Что удаляется
+
+Вот это окно (и затемнение за ним) скрипт прячет:
+
+![Пример окна Flickr «Upgrade to Pro», которое удаляется](images/popup-example.png)
+
+_Скриншот рекламного окна Flickr приведён только для иллюстрации. Flickr и фотография в окне принадлежат их владельцам._
+
 ## Возможности
 
 - Прячет рекламное окно Pro и затемнение до отрисовки браузером (окно не успевает мигнуть).
@@ -20,7 +28,7 @@
    - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox)
 2. Установите скрипт:
-   - **[Установить с GitHub](https://github.com/aspdiovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
+   - **[Установить с GitHub](https://github.com/aspidovss/flickr-pro-popup-remover/raw/main/flickr-pro-popup-remover.user.js)**
    - или с Greasy Fork: _ссылка появится позже_
 3. Откройте любую страницу фото на Flickr. Окно больше не появляется.
 
