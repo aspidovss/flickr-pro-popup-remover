@@ -2,9 +2,9 @@
 // @name         Flickr Pro Popup Remover
 // @name:ru      Удаление окна Flickr Pro
 // @namespace    https://github.com/aspidovss/flickr-pro-popup-remover
-// @version      1.6.0
-// @description  Removes the "Upgrade to Pro" popup, its dark backdrop and the "Upgrade to Flickr Pro to hide these ads" banner on flickr.com, without flicker.
-// @description:ru  Убирает окно «Upgrade to Pro», затемнение и баннер «Upgrade to Flickr Pro to hide these ads» на flickr.com без морганий.
+// @version      1.7.1
+// @description  Removes the "Upgrade to Pro" popup, the "Upgrade to Flickr Pro to hide these ads" banner and the ad blocks on flickr.com, without flicker.
+// @description:ru  Убирает окно «Upgrade to Pro», баннер «Upgrade to Flickr Pro to hide these ads» и рекламные блоки на flickr.com без морганий.
 // @author       aspidovss
 // @license      MIT
 // @homepageURL  https://github.com/aspidovss/flickr-pro-popup-remover
@@ -19,14 +19,16 @@
 /*
  * Flickr Pro Popup Remover
  * ------------------------
- * EN: Flickr periodically shows a full-screen "Upgrade to Pro" modal and an inline
- *     "Upgrade to Flickr Pro to hide these ads" banner. This script hides both (and the
- *     modal's backdrop) before the browser paints them, restores page scrolling, and does
- *     not touch any other Flickr dialog (share, edit, etc.).
- * RU: Flickr периодически показывает полноэкранное окно «Upgrade to Pro» и баннер
- *     «Upgrade to Flickr Pro to hide these ads». Скрипт прячет оба (и затемнение окна)
- *     до отрисовки браузером, возвращает прокрутку страницы и не трогает остальные окна
- *     Flickr (поделиться, редактирование и т.д.).
+ * EN: Flickr periodically shows a full-screen "Upgrade to Pro" modal, an inline
+ *     "Upgrade to Flickr Pro to hide these ads" banner and ad blocks. This script hides all
+ *     of them (and the modal's backdrop) before the browser paints them, restores page
+ *     scrolling, and does not touch any other Flickr dialog (share, edit, etc.).
+ *     Note: it only hides elements; it does not block the ad network requests.
+ * RU: Flickr периодически показывает полноэкранное окно «Upgrade to Pro», баннер
+ *     «Upgrade to Flickr Pro to hide these ads» и рекламные блоки. Скрипт прячет всё это
+ *     (и затемнение окна) до отрисовки браузером, возвращает прокрутку страницы и не трогает
+ *     остальные окна Flickr (поделиться, редактирование и т.д.).
+ *     Важно: скрипт только прячет элементы, запросы к рекламным сетям он не блокирует.
  *
  * Requires CSS :has() — Firefox 121+, Chrome/Edge 105+, Safari 15.4+.
  * Требуется CSS :has() — Firefox 121+, Chrome/Edge 105+, Safari 15.4+.
@@ -52,12 +54,18 @@
   //     1) the ad modal is always hidden;
   //     2) every backdrop is invisible until we confirm it is not paired with an ad;
   //     3) the ad cannot lock page scrolling (it sets overflow:hidden on <body>);
-  //     4) the "Upgrade to Flickr Pro to hide these ads" banner is hidden.
+  //     4) the "Upgrade to Flickr Pro to hide these ads" banner is hidden;
+  //     5) ad containers are hidden (.photo-page-i-m-container wraps the ad slot, the
+  //        banner and the timer; .moola-wrapper / [data-aaad] are the ad slots themselves);
+  //     6) on /photos/ pages the empty ad strip above the header (.nav-ad-container) is hidden.
   // RU: Подключается на document-start, поэтому правила действуют до первой отрисовки:
   //     1) рекламное окно всегда скрыто;
   //     2) любое затемнение невидимо, пока не подтверждено, что рядом нет рекламы;
   //     3) реклама не блокирует прокрутку (она ставит overflow:hidden на <body>);
-  //     4) баннер «Upgrade to Flickr Pro to hide these ads» скрыт.
+  //     4) баннер «Upgrade to Flickr Pro to hide these ads» скрыт;
+  //     5) рекламные контейнеры скрыты (.photo-page-i-m-container — обёртка рекламного слота,
+  //        баннера и таймера; .moola-wrapper / [data-aaad] — сами рекламные слоты);
+  //     6) на страницах /photos/ скрыта пустая рекламная полоса над шапкой (.nav-ad-container).
   const css = document.createElement('style');
   css.textContent = `
     .fluid-modal-view:has(${AD}) { display: none !important; }
@@ -65,8 +73,25 @@
     html:has(.fluid-modal-view:has(${AD})),
     html:has(.fluid-modal-view:has(${AD})) body { overflow: auto !important; }
     .upgrade-to-pro-cta { display: none !important; }
+    .photo-page-i-m-container,
+    .moola-wrapper,
+    [data-aaad],
+    .navad-timer-container { display: none !important; }
+    html.fpr-photos .nav-ad-container,
+    html.fpr-photos .desktop-nav-ad { display: none !important; }
   `;
   (document.head || document.documentElement).appendChild(css);
+
+  // EN: Page scope for rule 6. Flickr is a single-page app (the URL changes without a reload),
+  //     so the scope is re-evaluated on every DOM change and on back/forward navigation.
+  // RU: Область действия правила 6. Flickr — одностраничное приложение (адрес меняется без
+  //     перезагрузки), поэтому область пересчитывается при каждом изменении DOM и навигации.
+  const root = document.documentElement;
+  function updateScope() {
+    root.classList.toggle('fpr-photos', location.pathname.startsWith('/photos/'));
+  }
+  updateScope();
+  window.addEventListener('popstate', updateScope);
 
   const closed = new WeakSet();
 
@@ -81,6 +106,7 @@
   // EN: Runs synchronously from MutationObserver, i.e. before the browser draws the frame.
   // RU: Выполняется синхронно из MutationObserver, то есть раньше, чем браузер нарисует кадр.
   function check() {
+    updateScope();
     document.querySelectorAll('.fluid-modal-overlay').forEach((overlay) => {
       const modal = modalFor(overlay);
 
@@ -116,5 +142,5 @@
 
   new MutationObserver(check).observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener('DOMContentLoaded', check);
-  log('v1.6.0 started');
+  log('v1.7.1 started');
 })();

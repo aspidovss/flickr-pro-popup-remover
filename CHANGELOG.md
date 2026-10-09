@@ -3,6 +3,17 @@
 All notable changes to this project are documented here.
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.7.1] - 2026-10-09
+
+### Fixed
+- On `https://www.flickr.com/photos/…` pages the empty ad strip above the header (`.nav-ad-container`) no longer takes up space.
+
+## [1.7.0] - 2026-10-09
+
+### Added
+- Hides the ad blocks on photo pages (`.photo-page-i-m-container`, `.moola-wrapper`, `[data-aaad]`, `.navad-timer-container`) without leaving an empty gap.
+- README: screenshot-free description of the ad block structure; clarified that the script only hides elements and does not block network requests.
+
 ## [1.6.0] - 2026-10-09
 
 ### Added

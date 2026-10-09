@@ -2,9 +2,9 @@
 
 [Русская версия](README.ru.md)
 
-A small userscript that removes the full-screen **"Upgrade to Pro"** popup that Flickr keeps showing while you browse photos — together with its dark backdrop — and the **"Upgrade to Flickr Pro to hide these ads"** banner. It does it **without flicker**.
+A small userscript that removes the full-screen **"Upgrade to Pro"** popup that Flickr keeps showing while you browse photos — together with its dark backdrop — as well as the **"Upgrade to Flickr Pro to hide these ads"** banner and the **ad blocks** themselves. It does it all **without flicker**.
 
-> Not affiliated with or endorsed by Flickr. This script only hides an advertisement in your own browser; it does not bypass any paywall or unlock any Pro feature.
+> Not affiliated with or endorsed by Flickr. This script only hides page elements (advertising and upsell blocks) in your own browser; it does not unlock any server-side Pro features such as unlimited uploads or detailed stats. Note that an ad-free experience is also one of the paid Flickr Pro benefits — use the script at your own discretion.
 
 ## What it removes
 
@@ -24,10 +24,27 @@ This advertising text under the top menu is removed:
 
 Removed text: **Upgrade to Flickr Pro to hide these ads** (the `.upgrade-to-pro-cta` block).
 
+### 3. Ad blocks
+
+The advertising slots on photo pages are hidden together with their wrapper, so no empty gap is left:
+
+```html
+<div class="photo-page-i-m-container">
+  <div class="moola-wrapper"> <div data-aaad="true" ...> ad slot </div> </div>
+  <p class="upgrade-to-pro-cta">Upgrade to Flickr Pro to hide these ads</p>
+  <div class="navad-timer-container">...</div>
+</div>
+```
+
+Hidden containers: `.photo-page-i-m-container`, `.moola-wrapper`, `[data-aaad]`, `.navad-timer-container`.
+
+On `https://www.flickr.com/photos/…` pages the empty leaderboard strip above the header (`.nav-ad-container`) is hidden as well, so it no longer takes up space.
+
 ## Features
 
 - Hides the Pro upsell modal and its backdrop before the browser paints it (no flash of the popup).
 - Hides the "Upgrade to Flickr Pro to hide these ads" banner (`.upgrade-to-pro-cta`).
+- Hides the ad blocks (`.photo-page-i-m-container`, `.moola-wrapper`, `[data-aaad]`) without leaving an empty gap.
 - Restores page scrolling, which the popup locks.
 - Leaves every other Flickr dialog (share, edit, etc.) untouched.
 - No dependencies, no network requests, no data collection. About 100 lines of readable code.
@@ -54,7 +71,9 @@ Flickr renders the popup as a `fluid-modal-view` element (containing an `upsell-
 1. injects CSS at `document-start` that hides any modal containing the upsell markup and keeps every backdrop invisible until it is confirmed to belong to a regular dialog;
 2. watches the DOM with a `MutationObserver` (synchronously, before the frame is drawn) and reveals backdrops of regular dialogs;
 3. presses the popup's close button once so Flickr tidies up its own state;
-4. hides the `.upgrade-to-pro-cta` banner with a plain CSS rule.
+4. hides the `.upgrade-to-pro-cta` banner and the ad containers (`.photo-page-i-m-container`, `.moola-wrapper`, `[data-aaad]`) with plain CSS rules.
+
+The script only **hides** elements. It does not block network requests to ad servers; use a content blocker if you also want that.
 
 Flickr uses dynamically generated element ids (`yui_3_18_1_…`), so the script matches stable class names and link patterns instead.
 
